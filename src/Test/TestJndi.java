@@ -22,10 +22,12 @@ import javax.naming.NamingException;
 
 public class TestJndi implements MessageListener{
 	
+	//Jndi name is got from after seeing what is seeing in log after the server staart
 	public static final String JNDI_TOPIC="java:/jms/topic/sunil/Topic";
 	
 	public void publish(TopicConnection aInTopicConnection,Topic aInTopic, String aInUserName) throws JMSException, IOException
 	{
+		//For a given topic create a publisher from the session,and then publish the message from the publisher object.
 		TopicSession lTopicSession = aInTopicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 		TopicPublisher lTopicPublisher = lTopicSession.createPublisher(aInTopic);
 		aInTopicConnection.start();
@@ -49,6 +51,7 @@ public class TestJndi implements MessageListener{
 	
 	public void subscribe(TopicConnection aInTopicConnection,Topic aInTopic, TestJndi aInTestJndi) throws JMSException
 	{
+		//Open a session and then an subscriber on the session is created after which we attach the listener to the topic.
 		TopicSession lTopicSession = aInTopicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 		TopicSubscriber lTopicSubscriber = lTopicSession.createSubscriber(aInTopic);
 		lTopicSubscriber.setMessageListener(aInTestJndi);
